@@ -1,13 +1,20 @@
 package it.polito.tdp.PremierLeague.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
 	Integer playerID;
 	String name;
+	Double mediaGoal;
+	Integer teamID;
+	List<MatchPlayer> matchTitolare;
 	
 	public Player(Integer playerID, String name) {
 		super();
 		this.playerID = playerID;
 		this.name = name;
+		this.matchTitolare = new ArrayList<>();
 	}
 	
 	public Integer getPlayerID() {
@@ -21,6 +28,30 @@ public class Player {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Double getMediaGoal() {
+		return mediaGoal;
+	}
+
+	public void setMediaGoal(Double mediaGoal) {
+		this.mediaGoal = mediaGoal;
+	}
+
+	public List<MatchPlayer> getMatchTitolare() {
+		return matchTitolare;
+	}
+
+	public void addMatchTitolare(MatchPlayer matchTitolare) {
+		this.matchTitolare.add(matchTitolare);
+	}
+
+	public Integer getTeamID() {
+		return teamID;
+	}
+
+	public void setTeamID(Integer teamID) {
+		this.teamID = teamID;
 	}
 
 	@Override

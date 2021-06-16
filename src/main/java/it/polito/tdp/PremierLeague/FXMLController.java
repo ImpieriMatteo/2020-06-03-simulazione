@@ -5,9 +5,14 @@
 package it.polito.tdp.PremierLeague;
 
 import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.PremierLeague.model.Arco;
 import it.polito.tdp.PremierLeague.model.Model;
+import it.polito.tdp.PremierLeague.model.Player;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,17 +49,57 @@ public class FXMLController {
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
+    	this.txtResult.clear();
+    	
+    	Double xGoals;
+    	try {
+    		xGoals = Double.parseDouble(this.txtGoals.getText());
+    	}
+    	catch(NumberFormatException e) {
+    		this.txtResult.appendText("Numero medio di Goal inserito errato, inserisci un numero!!");
+    		return;
+    	}
+    	
+    	String result = this.model.creaGrafo(xGoals);
 
+    	this.txtResult.appendText(result);
+    	this.btnTopPlayer.setDisable(false);
     }
 
     @FXML
     void doDreamTeam(ActionEvent event) {
-
+    	this.txtResult.clear();
+    	
+    	Integer k;
+    	try {
+    		k = Integer.parseInt(this.txtK.getText());
+    	}
+    	catch(NumberFormatException e) {
+    		this.txtResult.appendText("Devi inserire un Numero intero!!");
+    		return;
+    	}
+    	
+    	List<Player> result = this.model.getDreamTeam(k);
+    	Integer titolarita = this.model.getTitolaritaBest();
+    	
+    	this.txtResult.appendText("DREAM TEAM TROVATO:\n\nTITOLARITA': "+titolarita+"\n");
+    	for(Player p : result)
+    		this.txtResult.appendText(p.toString()+"\n");
     }
 
     @FXML
     void doTopPlayer(ActionEvent event) {
-
+    	this.txtResult.clear();
+    	
+    	List<Arco> playerBattuti = this.model.getPlayerMigliore();
+    	Collections.sort(playerBattuti);
+    	
+    	for(Arco a : playerBattuti) {
+    		if(playerBattuti.get(0).equals(a))
+    			this.txtResult.appendText(String.format("TOP PLAYER: %s\n\nAVVERSARI BATTUTI:\n", a.getSource().toString()));
+    		else
+    			this.txtResult.appendText(a.getDestination()+" | "+a.getPeso()+"\n");
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
