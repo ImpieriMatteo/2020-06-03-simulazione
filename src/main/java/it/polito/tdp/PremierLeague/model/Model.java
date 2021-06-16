@@ -112,7 +112,6 @@ public class Model {
 			
 			if(!parziale.contains(p)) {
 				Integer temp = 0;
-				List<Player> temp2 = new ArrayList<>();
 				
 				for(DefaultWeightedEdge e : this.grafo.outgoingEdgesOf(p)) 
 					temp += (int)this.grafo.getEdgeWeight(e);
